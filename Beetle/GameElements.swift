@@ -19,8 +19,8 @@ extension GameScene {
     
     func createWalls() -> SKNode  {
         // 1
-        let flowerNode = SKSpriteNode(imageNamed: "flower")
-        flowerNode.size = CGSize(width: 20, height: 20)
+        let flowerNode = SKSpriteNode(imageNamed: "sourCream")
+        flowerNode.size = CGSize(width: 75, height: 75)
         flowerNode.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 - 30)
         flowerNode.physicsBody = SKPhysicsBody(rectangleOf: flowerNode.size)
         flowerNode.physicsBody?.affectedByGravity = false
@@ -36,7 +36,7 @@ extension GameScene {
         let topWall = SKSpriteNode(imageNamed: "pillar")
         let btmWall = SKSpriteNode(imageNamed: "pillar")
         
-        topWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 + 370)
+        topWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 + 370) //370
         btmWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 - 420)
         
         topWall.setScale(0.5)
@@ -79,7 +79,7 @@ extension GameScene {
     }
     func createBird() -> SKSpriteNode {
         //1
-        let bird = SKSpriteNode(texture: SKTextureAtlas(named:"player").textureNamed("bird1"))
+        let bird = SKSpriteNode(texture: SKTextureAtlas(named:"player").textureNamed("taco1"))
         bird.size = CGSize(width: 50, height: 50)
         bird.position = CGPoint(x:self.frame.midX, y:self.frame.midY)
         //2
@@ -151,7 +151,7 @@ extension GameScene {
     //5
     func createLogo() {
         logoImg = SKSpriteNode()
-        logoImg = SKSpriteNode(imageNamed: "logo")
+        logoImg = SKSpriteNode(imageNamed: "newLogo")
         logoImg.size = CGSize(width: 272, height: 65)
         logoImg.position = CGPoint(x:self.frame.midX, y:self.frame.midY + 100)
         logoImg.setScale(0.5)
@@ -169,4 +169,25 @@ extension GameScene {
         taptoplayLbl.fontName = "HelveticaNeue"
         return taptoplayLbl
     }
+    
+    func createYouSuckLogo() {
+        youSuckImg = SKSpriteNode()
+        youSuckImg = SKSpriteNode(imageNamed: "youSuck")
+        youSuckImg.size = CGSize(width: 272, height: 65)
+        youSuckImg.position = CGPoint(x:self.frame.width / 2, y:self.frame.height / 2 - 150)
+        youSuckImg.zPosition = 9
+        youSuckImg.setScale(0.5)
+        self.addChild(youSuckImg)
+        youSuckImg.run(SKAction.scale(to: 1.0, duration: 0.3))
+    }
+    
+   /* func youSuck() -> SKLabelNode {
+        let youSuckLbl = SKLabelNode()
+        youSuckLbl.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2 - 150)
+        youSuckLbl.text = "You suck."
+        youSuckLbl.fontColor = UIColor(red: 63/255, green: 79/255, blue: 145/255, alpha: 1.0)
+        youSuckLbl.zPosition = 25
+        self.addChild(youSuckLbl)
+        return youSuckLbl
+    }*/
 }

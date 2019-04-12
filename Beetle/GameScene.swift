@@ -23,6 +23,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var logoImg = SKSpriteNode()
     var wallPair = SKNode()
     var moveAndRemove = SKAction()
+    var youSuckImg = SKSpriteNode()
     
     //CREATE THE BIRD ATLAS FOR ANIMATION
     let birdAtlas = SKTextureAtlas(named:"player")
@@ -140,10 +141,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.addChild(background)
         }
         //SET UP THE BIRD SPRITES FOR ANIMATION
-        birdSprites.append(birdAtlas.textureNamed("bird1"))
-        birdSprites.append(birdAtlas.textureNamed("bird2"))
-        birdSprites.append(birdAtlas.textureNamed("bird3"))
-        birdSprites.append(birdAtlas.textureNamed("bird4"))
+        birdSprites.append(birdAtlas.textureNamed("taco1"))
+        birdSprites.append(birdAtlas.textureNamed("taco1"))
+        birdSprites.append(birdAtlas.textureNamed("taco1"))
+        birdSprites.append(birdAtlas.textureNamed("taco1"))
         
         self.bird = createBird()
         self.addChild(bird)
@@ -177,6 +178,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if isDied == false{
                 isDied = true
                 createRestartBtn()
+                createYouSuckLogo()
                 pauseBtn.removeFromParent()
                 self.bird.removeAllActions()
             }
