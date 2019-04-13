@@ -106,6 +106,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func makeGameHarder () {
+        
+        let distance = CGFloat(self.frame.width + wallPair.frame.width)
+        let movePillars = SKAction.moveBy(x: -distance - 300, y: 0, duration: TimeInterval(0.008 * distance))
+        let removePillars = SKAction.removeFromParent()
+        moveAndRemove = SKAction.sequence([movePillars, removePillars])
+    }
+    
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         if isGameStarted == true{
@@ -163,6 +171,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         taptoplayLbl = createTaptoplayLabel()
         self.addChild(taptoplayLbl)
+        
+        
+
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -185,16 +196,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else if firstBody.categoryBitMask == CollisionBitMask.birdCategory && secondBody.categoryBitMask == CollisionBitMask.flowerCategory {
             run(coinSound)
             score += 1
+            if score > 1 {
+                makeGameHarder()
+            }
             scoreLbl.text = "\(score)"
             secondBody.node?.removeFromParent()
         } else if firstBody.categoryBitMask == CollisionBitMask.flowerCategory && secondBody.categoryBitMask == CollisionBitMask.birdCategory {
             run(coinSound)
             score += 1
+            if score > 1 {
+                makeGameHarder()
+            }
             scoreLbl.text = "\(score)"
             firstBody.node?.removeFromParent()
         }
     }
     func restartScene(){
+       /* taptoplayLbl.removeFromParent()
+        bird.removeFromParent()
+        highscoreLbl.removeFromParent()
+        scoreLbl.removeFromParent()
+        restartBtn.removeFromParent()
+        pauseBtn.removeFromParent()
+        logoImg.removeFromParent()
+        wallPair.removeFromParent()
+        youSuckImg.removeFromParent()
+    */
         self.removeAllChildren()
         self.removeAllActions()
         isDied = false
@@ -202,4 +229,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         score = 0
         createScene()
     }
+    
+    
 }

@@ -8,8 +8,12 @@
 
 import UIKit
 import SpriteKit
+import AVFoundation
 
 class GameViewController: UIViewController {
+    
+    var AudioPlayer = AVAudioPlayer()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +25,11 @@ class GameViewController: UIViewController {
         skView.ignoresSiblingOrder = false
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
+        let AssortedMusics = NSURL(fileURLWithPath: Bundle.main.path(forResource: "background", ofType: "mp3")!)
+        AudioPlayer = try! AVAudioPlayer(contentsOf: AssortedMusics as URL)
+        AudioPlayer.prepareToPlay()
+        AudioPlayer.numberOfLoops = -1
+        AudioPlayer.play()
         
     }
     

@@ -17,6 +17,7 @@ struct CollisionBitMask {
 
 extension GameScene {
     
+    
     func createWalls() -> SKNode  {
         // 1
         let flowerNode = SKSpriteNode(imageNamed: "sourCream")

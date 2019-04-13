@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6468180D226129A6005F8F08 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6468180C226129A5005F8F08 /* background.mp3 */; };
 		64A4F382225E222C00D4DC39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A4F381225E222C00D4DC39 /* AppDelegate.swift */; };
 		64A4F384225E222C00D4DC39 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 64A4F383225E222C00D4DC39 /* GameScene.sks */; };
 		64A4F386225E222C00D4DC39 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 64A4F385225E222C00D4DC39 /* Actions.sks */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6468180C226129A5005F8F08 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
 		64A4F37E225E222C00D4DC39 /* Beetle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Beetle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64A4F381225E222C00D4DC39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		64A4F383225E222C00D4DC39 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				64A4F38B225E222C00D4DC39 /* Main.storyboard */,
 				64A4F38E225E223100D4DC39 /* Assets.xcassets */,
 				64A4F3B7225E241700D4DC39 /* CoinSound.mp3 */,
+				6468180C226129A5005F8F08 /* background.mp3 */,
 				64A4F3B5225E240C00D4DC39 /* player.atlas */,
 				64A4F390225E223100D4DC39 /* LaunchScreen.storyboard */,
 				64A4F393225E223100D4DC39 /* Info.plist */,
@@ -251,6 +254,7 @@
 				64A4F3B6225E240C00D4DC39 /* player.atlas in Resources */,
 				64A4F38D225E222C00D4DC39 /* Main.storyboard in Resources */,
 				64A4F384225E222C00D4DC39 /* GameScene.sks in Resources */,
+				6468180D226129A6005F8F08 /* background.mp3 in Resources */,
 				64A4F38F225E223100D4DC39 /* Assets.xcassets in Resources */,
 				64A4F392225E223100D4DC39 /* LaunchScreen.storyboard in Resources */,
 				64A4F386225E222C00D4DC39 /* Actions.sks in Resources */,
