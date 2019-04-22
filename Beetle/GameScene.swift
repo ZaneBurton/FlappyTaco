@@ -10,6 +10,8 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    //TESTING FOR NEW BRANCH
+    
     var isGameStarted = Bool(false)
     var isDied = Bool(false)
     let coinSound = SKAction.playSoundFileNamed("CoinSound.mp3", waitForCompletion: false)
@@ -67,6 +69,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let removePillars = SKAction.removeFromParent()
             moveAndRemove = SKAction.sequence([movePillars, removePillars])
             
+            print("you are where the walls are getting created the first time")
+            
             bird.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
             bird.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 40))
         } else {
@@ -104,6 +108,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         }
+    }
+    
+    func bringBackToNormal () {
+        
+        wallPair.removeFromParent()
+        self.removeAction(forKey: "spawn")
+        self.removeAction(forKey: "delay")
+        self.removeAction(forKey: "SpawnDelay")
+        self.removeAction(forKey: "spawnDelayForever")
+        self.removeAction(forKey: "movePillars")
+        self.removeAction(forKey: "removePillars")
+        self.removeAction(forKey: "moveAndRemove")
+        
+        
+        let spawn = SKAction.run({
+            () in
+            self.wallPair = self.createWalls()
+            self.addChild(self.wallPair)
+        })
+        let delay = SKAction.wait(forDuration: 1.5)
+        let SpawnDelay = SKAction.sequence([spawn, delay])
+        let spawnDelayForever = SKAction.repeatForever(SpawnDelay)
+        self.run(spawnDelayForever)
+        //3
+        let distance2 = CGFloat(self.frame.width + wallPair.frame.width)
+        let movePillars = SKAction.moveBy(x: -distance2 - 50, y: 0, duration: TimeInterval(0.008 * distance2))
+        let removePillars = SKAction.removeFromParent()
+        moveAndRemove = SKAction.sequence([movePillars, removePillars])
     }
     
     func makeGameHarder () {
@@ -196,16 +228,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else if firstBody.categoryBitMask == CollisionBitMask.birdCategory && secondBody.categoryBitMask == CollisionBitMask.flowerCategory {
             run(coinSound)
             score += 1
-            if score > 1 {
+            if score > 1 && score < 4 {
                 makeGameHarder()
+            } else if score > 4  && score < 6{
+               print("Here")
+               bringBackToNormal()
             }
             scoreLbl.text = "\(score)"
             secondBody.node?.removeFromParent()
         } else if firstBody.categoryBitMask == CollisionBitMask.flowerCategory && secondBody.categoryBitMask == CollisionBitMask.birdCategory {
             run(coinSound)
             score += 1
-            if score > 1 {
+            if score > 1 && score < 4 {
                 makeGameHarder()
+            } else if score > 4 &&  score < 6{
+                print("Here2")
+                bringBackToNormal()
             }
             scoreLbl.text = "\(score)"
             firstBody.node?.removeFromParent()
