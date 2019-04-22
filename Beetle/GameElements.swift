@@ -13,6 +13,7 @@ struct CollisionBitMask {
     static let pillarCategory:UInt32 = 0x1 << 1
     static let flowerCategory:UInt32 = 0x1 << 2
     static let groundCategory:UInt32 = 0x1 << 3
+    static let lettuceCategory:UInt32 = 0x1 << 4
 }
 
 extension GameScene {
@@ -30,6 +31,11 @@ extension GameScene {
         flowerNode.physicsBody?.collisionBitMask = 0
         flowerNode.physicsBody?.contactTestBitMask = CollisionBitMask.birdCategory
         flowerNode.color = SKColor.blue
+        
+        let randomFloat = Float.random(in: 0...100)
+        let lettuceNode = SKSpriteNode(imageNamed: <#T##String#>)
+        lettuceNode.size = CGSize(width: 75, height: 75)
+        lettuceNode.position = CGPoint(x: self.frame.width + 45, y: CGFloat(randomFloat))
         // 2
         wallPair = SKNode()
         wallPair.name = "wallPair"

@@ -59,7 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.addChild(self.wallPair)
             })
             //2
-            let delay = SKAction.wait(forDuration: 1.5)
+            let delay = SKAction.wait(forDuration: 2.0) //1.5
             let SpawnDelay = SKAction.sequence([spawn, delay])
             let spawnDelayForever = SKAction.repeatForever(SpawnDelay)
             self.run(spawnDelayForever)
@@ -127,7 +127,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.wallPair = self.createWalls()
             self.addChild(self.wallPair)
         })
-        let delay = SKAction.wait(forDuration: 1.5)
+        let delay = SKAction.wait(forDuration: 1.5) //1.5
         let SpawnDelay = SKAction.sequence([spawn, delay])
         let spawnDelayForever = SKAction.repeatForever(SpawnDelay)
         self.run(spawnDelayForever)
@@ -229,10 +229,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             run(coinSound)
             score += 1
             if score > 1 && score < 4 {
-                makeGameHarder()
+                //makeGameHarder()
             } else if score > 4  && score < 6{
                print("Here")
-               bringBackToNormal()
+               //bringBackToNormal()
             }
             scoreLbl.text = "\(score)"
             secondBody.node?.removeFromParent()
@@ -240,10 +240,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             run(coinSound)
             score += 1
             if score > 1 && score < 4 {
-                makeGameHarder()
+                //makeGameHarder()
             } else if score > 4 &&  score < 6{
                 print("Here2")
-                bringBackToNormal()
+               // bringBackToNormal()
             }
             scoreLbl.text = "\(score)"
             firstBody.node?.removeFromParent()
