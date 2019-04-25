@@ -32,10 +32,17 @@ extension GameScene {
         flowerNode.physicsBody?.contactTestBitMask = CollisionBitMask.birdCategory
         flowerNode.color = SKColor.blue
         
-        let randomFloat = Float.random(in: 0...100)
-        let lettuceNode = SKSpriteNode(imageNamed: <#T##String#>)
+        let randomFloat = Float.random(in: 25...250)
+        let lettuceNode = SKSpriteNode(imageNamed: "lettuceLOL")
         lettuceNode.size = CGSize(width: 75, height: 75)
-        lettuceNode.position = CGPoint(x: self.frame.width + 45, y: CGFloat(randomFloat))
+        lettuceNode.position = CGPoint(x: self.frame.width + 175, y: CGFloat(randomFloat))
+        lettuceNode.physicsBody = SKPhysicsBody(rectangleOf: lettuceNode.size)
+        lettuceNode.physicsBody?.affectedByGravity = false
+        lettuceNode.physicsBody?.isDynamic = false
+        lettuceNode.physicsBody?.categoryBitMask = CollisionBitMask.lettuceCategory
+        lettuceNode.physicsBody?.collisionBitMask = 0
+        lettuceNode.physicsBody?.contactTestBitMask = CollisionBitMask.birdCategory
+        
         // 2
         wallPair = SKNode()
         wallPair.name = "wallPair"
@@ -73,6 +80,7 @@ extension GameScene {
         let randomPosition = random(min: -200, max: 200)
         wallPair.position.y = wallPair.position.y +  randomPosition
         wallPair.addChild(flowerNode)
+        wallPair.addChild(lettuceNode)
         
         wallPair.run(moveAndRemove)
         
@@ -96,7 +104,7 @@ extension GameScene {
         //3
         bird.physicsBody?.categoryBitMask = CollisionBitMask.birdCategory
         bird.physicsBody?.collisionBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.groundCategory
-        bird.physicsBody?.contactTestBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.flowerCategory | CollisionBitMask.groundCategory
+        bird.physicsBody?.contactTestBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.flowerCategory | CollisionBitMask.groundCategory | CollisionBitMask.lettuceCategory
         //4
         bird.physicsBody?.affectedByGravity = false
         bird.physicsBody?.isDynamic = true

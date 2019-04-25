@@ -212,6 +212,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let firstBody = contact.bodyA
         let secondBody = contact.bodyB
         
+        if firstBody.categoryBitMask == CollisionBitMask.birdCategory && secondBody.categoryBitMask == CollisionBitMask.lettuceCategory {
+            secondBody.node?.removeFromParent()
+        } else if firstBody.categoryBitMask == CollisionBitMask.lettuceCategory && secondBody.categoryBitMask == CollisionBitMask.birdCategory {
+            firstBody.node?.removeFromParent()
+        }
+        
         if firstBody.categoryBitMask == CollisionBitMask.birdCategory && secondBody.categoryBitMask == CollisionBitMask.pillarCategory || firstBody.categoryBitMask == CollisionBitMask.pillarCategory && secondBody.categoryBitMask == CollisionBitMask.birdCategory || firstBody.categoryBitMask == CollisionBitMask.birdCategory && secondBody.categoryBitMask == CollisionBitMask.groundCategory || firstBody.categoryBitMask == CollisionBitMask.groundCategory && secondBody.categoryBitMask == CollisionBitMask.birdCategory{
             enumerateChildNodes(withName: "wallPair", using: ({
                 (node, error) in
