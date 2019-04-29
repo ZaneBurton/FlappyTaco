@@ -149,6 +149,20 @@ extension GameScene {
         scoreLbl.addChild(scoreBg)
         return scoreLbl
     }
+    
+    func createLettuceLabel() -> SKLabelNode {
+        let lettuceLbl = SKLabelNode()
+        lettuceLbl.position = CGPoint(x: self.frame.width / 4, y: self.frame.height / 2 + self.frame.height / 2.6)
+        lettuceLbl.zPosition = 5
+        lettuceLbl.fontSize = 12
+        lettuceLbl.fontColor = UIColor.black
+        lettuceLbl.fontName = "HelveticaNeue-Bold"
+        
+        lettuceLbl.position = CGPoint(x: self.frame.width - 335, y: self.frame.height - 22)
+        lettuceLbl.text = "Lettuce: "
+        
+        return lettuceLbl
+    }
     //4
     func createHighscoreLabel() -> SKLabelNode {
         let highscoreLbl = SKLabelNode()

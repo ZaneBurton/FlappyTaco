@@ -17,6 +17,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let coinSound = SKAction.playSoundFileNamed("CoinSound.mp3", waitForCompletion: false)
     
     var score = Int(0)
+    var capturedLettuce = Int(0)
+    
     var scoreLbl = SKLabelNode()
     var highscoreLbl = SKLabelNode()
     var taptoplayLbl = SKLabelNode()
@@ -26,6 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var wallPair = SKNode()
     var moveAndRemove = SKAction()
     var youSuckImg = SKSpriteNode()
+    var lettuceLbl = SKLabelNode()
     
     //CREATE THE BIRD ATLAS FOR ANIMATION
     let birdAtlas = SKTextureAtlas(named:"player")
@@ -199,6 +202,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         highscoreLbl = createHighscoreLabel()
         self.addChild(highscoreLbl)
         
+        lettuceLbl = createLettuceLabel()
+        self.addChild(lettuceLbl)
+        
         createLogo()
         
         taptoplayLbl = createTaptoplayLabel()
@@ -213,8 +219,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let secondBody = contact.bodyB
         
         if firstBody.categoryBitMask == CollisionBitMask.birdCategory && secondBody.categoryBitMask == CollisionBitMask.lettuceCategory {
+            capturedLettuce += 1
+            lettuceLbl.text = "Lettuce: \(capturedLettuce)"
+
             secondBody.node?.removeFromParent()
         } else if firstBody.categoryBitMask == CollisionBitMask.lettuceCategory && secondBody.categoryBitMask == CollisionBitMask.birdCategory {
+            capturedLettuce += 1
+            lettuceLbl.text = "Lettuce: \(capturedLettuce)"
+
             firstBody.node?.removeFromParent()
         }
         
