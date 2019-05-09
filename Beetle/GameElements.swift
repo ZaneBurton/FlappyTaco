@@ -14,6 +14,7 @@ struct CollisionBitMask {
     static let flowerCategory:UInt32 = 0x1 << 2
     static let groundCategory:UInt32 = 0x1 << 3
     static let lettuceCategory:UInt32 = 0x1 << 4
+    static let cheeseCategory:UInt32 = 0x1 << 5
 }
 
 extension GameScene {
@@ -32,7 +33,9 @@ extension GameScene {
         flowerNode.physicsBody?.contactTestBitMask = CollisionBitMask.birdCategory
         flowerNode.color = SKColor.blue
         
-        let randomFloat = Float.random(in: 25...250)
+        
+        
+        let randomFloat = Float.random(in: 150...200) //25...250
         let lettuceNode = SKSpriteNode(imageNamed: "lettuceLOL")
         lettuceNode.size = CGSize(width: 75, height: 75)
         lettuceNode.position = CGPoint(x: self.frame.width + 175, y: CGFloat(randomFloat))
@@ -42,6 +45,17 @@ extension GameScene {
         lettuceNode.physicsBody?.categoryBitMask = CollisionBitMask.lettuceCategory
         lettuceNode.physicsBody?.collisionBitMask = 0
         lettuceNode.physicsBody?.contactTestBitMask = CollisionBitMask.birdCategory
+        
+        let randomCheeseFloat = Float.random(in: 400...550)//275...350
+        let cheeseNode = SKSpriteNode(imageNamed: "cheese1")
+        cheeseNode.size = CGSize(width: 75, height: 75)
+        cheeseNode.position = CGPoint(x: self.frame.width + 175, y: CGFloat(randomCheeseFloat))
+        cheeseNode.physicsBody = SKPhysicsBody(rectangleOf: cheeseNode.size)
+        cheeseNode.physicsBody?.affectedByGravity = false
+        cheeseNode.physicsBody?.isDynamic = false
+        cheeseNode.physicsBody?.categoryBitMask = CollisionBitMask.cheeseCategory
+        cheeseNode.physicsBody?.collisionBitMask = 0
+        cheeseNode.physicsBody?.contactTestBitMask = CollisionBitMask.birdCategory
         
         // 2
         wallPair = SKNode()
@@ -80,8 +94,10 @@ extension GameScene {
         let randomPosition = random(min: -200, max: 200)
         wallPair.position.y = wallPair.position.y +  randomPosition
         wallPair.addChild(flowerNode)
-        wallPair.addChild(lettuceNode)
-        
+        if gameMode == false {
+            wallPair.addChild(lettuceNode)
+            wallPair.addChild(cheeseNode)
+        }
         wallPair.run(moveAndRemove)
         
         return wallPair
@@ -104,7 +120,7 @@ extension GameScene {
         //3
         bird.physicsBody?.categoryBitMask = CollisionBitMask.birdCategory
         bird.physicsBody?.collisionBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.groundCategory
-        bird.physicsBody?.contactTestBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.flowerCategory | CollisionBitMask.groundCategory | CollisionBitMask.lettuceCategory
+        bird.physicsBody?.contactTestBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.flowerCategory | CollisionBitMask.groundCategory | CollisionBitMask.lettuceCategory | CollisionBitMask.cheeseCategory
         //4
         bird.physicsBody?.affectedByGravity = false
         bird.physicsBody?.isDynamic = true
@@ -121,6 +137,14 @@ extension GameScene {
         restartBtn.setScale(0)
         self.addChild(restartBtn)
         restartBtn.run(SKAction.scale(to: 1.0, duration: 0.3))
+    }
+    
+    func createEndlessMode() {
+        endlessBtn = SKSpriteNode(imageNamed: "endlessMode1")
+        endlessBtn.size = CGSize(width:150, height:100)
+        endlessBtn.position = CGPoint(x:self.frame.midX, y:self.frame.midY - 250)
+        endlessBtn.zPosition = 6
+        self.addChild(endlessBtn)
     }
     //2
     func createPauseBtn() {
@@ -162,6 +186,21 @@ extension GameScene {
         lettuceLbl.text = "Lettuce: "
         
         return lettuceLbl
+    }
+    
+    func createCheeseLabel() -> SKLabelNode {
+        let cheeseLbl = SKLabelNode()
+       // cheeseLbl.position = CGPoint(x: self.frame.width / 4, y: self.frame.height / 2 + self.frame.height / 2.8)
+        cheeseLbl.zPosition = 5
+        cheeseLbl.fontSize = 12
+        cheeseLbl.fontColor = UIColor.black
+        cheeseLbl.fontName = "HelveticaNeue-Bold"
+        
+        cheeseLbl.position = CGPoint(x: self.frame.width - 335, y: self.frame.height - 45)
+        cheeseLbl.text = "Cheese: "
+        
+        return cheeseLbl
+        
     }
     //4
     func createHighscoreLabel() -> SKLabelNode {
@@ -208,6 +247,17 @@ extension GameScene {
         youSuckImg.setScale(0.5)
         self.addChild(youSuckImg)
         youSuckImg.run(SKAction.scale(to: 1.0, duration: 0.3))
+    }
+    
+    func createYouWinLogo() {
+        youWinImg = SKSpriteNode()
+        youWinImg = SKSpriteNode(imageNamed: "youWin")
+        youWinImg.size = CGSize(width: 295, height: 80)
+        youWinImg.position = CGPoint(x:self.frame.width / 2, y:self.frame.height / 2 - 150)
+        youWinImg.zPosition = 9
+        youWinImg.setScale(0.8)
+        self.addChild(youWinImg)
+        youWinImg.run(SKAction.scale(to: 1.0, duration: 0.3))
     }
     
    /* func youSuck() -> SKLabelNode {

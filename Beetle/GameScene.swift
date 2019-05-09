@@ -12,12 +12,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //TESTING FOR NEW BRANCH
     
+    var gameMode = Bool(false)
     var isGameStarted = Bool(false)
     var isDied = Bool(false)
     let coinSound = SKAction.playSoundFileNamed("CoinSound.mp3", waitForCompletion: false)
     
     var score = Int(0)
     var capturedLettuce = Int(0)
+    var capturedCheese = Int(0)
     
     var scoreLbl = SKLabelNode()
     var highscoreLbl = SKLabelNode()
@@ -28,7 +30,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var wallPair = SKNode()
     var moveAndRemove = SKAction()
     var youSuckImg = SKSpriteNode()
+    var youWinImg = SKSpriteNode()
     var lettuceLbl = SKLabelNode()
+    var cheeseLbl = SKLabelNode()
+    var endlessBtn = SKSpriteNode()
     
     //CREATE THE BIRD ATLAS FOR ANIMATION
     let birdAtlas = SKTextureAtlas(named:"player")
@@ -42,6 +47,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isGameStarted == false{
+            
+            scoreLbl = createScoreLabel()
+            self.addChild(scoreLbl)
+            
+            
+            highscoreLbl = createHighscoreLabel()
+            self.addChild(highscoreLbl)
+            
+            lettuceLbl = createLettuceLabel()
+            self.addChild(lettuceLbl)
+            
+            cheeseLbl = createCheeseLabel()
+            self.addChild(cheeseLbl)
+            
+            
             //1
             isGameStarted =  true
             bird.physicsBody?.affectedByGravity = true
@@ -88,6 +108,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //1
             if isDied == true{
                 if restartBtn.contains(location){
+                    print("This should be restart mode")
                     if UserDefaults.standard.object(forKey: "highestScore") != nil {
                         let hscore = UserDefaults.standard.integer(forKey: "highestScore")
                         if hscore < Int(scoreLbl.text!)!{
@@ -97,6 +118,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         UserDefaults.standard.set(0, forKey: "highestScore")
                     }
                     restartScene()
+                }
+                else if endlessBtn.contains(location) {
+                    print("This should be endless Mode")
+                    restartEndlessScene()
                 }
             } else {
                 //2
@@ -196,15 +221,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let animateBird = SKAction.animate(with: self.birdSprites as! [SKTexture], timePerFrame: 0.1)
         self.repeatActionBird = SKAction.repeatForever(animateBird)
         
-        scoreLbl = createScoreLabel()
-        self.addChild(scoreLbl)
-        
-        highscoreLbl = createHighscoreLabel()
-        self.addChild(highscoreLbl)
-        
-        lettuceLbl = createLettuceLabel()
-        self.addChild(lettuceLbl)
-        
+    
+
+ 
         createLogo()
         
         taptoplayLbl = createTaptoplayLabel()
@@ -226,7 +245,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else if firstBody.categoryBitMask == CollisionBitMask.lettuceCategory && secondBody.categoryBitMask == CollisionBitMask.birdCategory {
             capturedLettuce += 1
             lettuceLbl.text = "Lettuce: \(capturedLettuce)"
-
+            print("YOU are HEREEREREREERRE")
+            
+            firstBody.node?.removeFromParent()
+        }
+        
+        if firstBody.categoryBitMask == CollisionBitMask.birdCategory && secondBody.categoryBitMask == CollisionBitMask.cheeseCategory {
+            capturedCheese += 1
+            cheeseLbl.text = "Cheese: \(capturedCheese)"
+            
+            secondBody.node?.removeFromParent()
+        } else if firstBody.categoryBitMask == CollisionBitMask.cheeseCategory && secondBody.categoryBitMask == CollisionBitMask.birdCategory {
+            capturedCheese += 1
+            cheeseLbl.text = "Cheese: \(capturedCheese)"
+            
             firstBody.node?.removeFromParent()
         }
         
@@ -239,6 +271,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if isDied == false{
                 isDied = true
                 createRestartBtn()
+                createEndlessMode()
                 createYouSuckLogo()
                 pauseBtn.removeFromParent()
                 self.bird.removeAllActions()
@@ -246,7 +279,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else if firstBody.categoryBitMask == CollisionBitMask.birdCategory && secondBody.categoryBitMask == CollisionBitMask.flowerCategory {
             run(coinSound)
             score += 1
-            if score > 1 && score < 4 {
+            if score > 1 && capturedLettuce > 1 && capturedCheese > 1 {
+                isDied = true
+                print("You won")
+
+                createRestartBtn()
+                createYouWinLogo()
+                pauseBtn.removeFromParent()
+                self.removeAllActions()
+                self.bird.removeAllActions()
                 //makeGameHarder()
             } else if score > 4  && score < 6{
                print("Here")
@@ -257,7 +298,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else if firstBody.categoryBitMask == CollisionBitMask.flowerCategory && secondBody.categoryBitMask == CollisionBitMask.birdCategory {
             run(coinSound)
             score += 1
-            if score > 1 && score < 4 {
+            if score > 1 && capturedLettuce > 1 && capturedCheese > 1 {
+                isDied = true
+                print("You won")
+
+                createRestartBtn()
+                createYouWinLogo()
+                pauseBtn.removeFromParent()
+                self.removeAllActions()
+                self.bird.removeAllActions()
                 //makeGameHarder()
             } else if score > 4 &&  score < 6{
                 print("Here2")
@@ -267,6 +316,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             firstBody.node?.removeFromParent()
         }
     }
+    
+    
     func restartScene(){
        /* taptoplayLbl.removeFromParent()
         bird.removeFromParent()
@@ -283,7 +334,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         isDied = false
         isGameStarted = false
         score = 0
+        capturedCheese = 0
+        capturedLettuce = 0
+        gameMode = false
         createScene()
+    }
+    
+    func restartEndlessScene() {
+        self.removeAllChildren()
+        self.removeAllActions()
+        isDied = false
+        isGameStarted = false
+        score = 0
+        capturedCheese = 0
+        capturedLettuce = 0
+        gameMode = true
+        createScene()
+        
     }
     
     
