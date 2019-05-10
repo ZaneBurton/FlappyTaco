@@ -238,11 +238,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let secondBody = contact.bodyB
         
         if firstBody.categoryBitMask == CollisionBitMask.birdCategory && secondBody.categoryBitMask == CollisionBitMask.lettuceCategory {
+            run(coinSound)
+
             capturedLettuce += 1
             lettuceLbl.text = "Lettuce: \(capturedLettuce)"
 
             secondBody.node?.removeFromParent()
         } else if firstBody.categoryBitMask == CollisionBitMask.lettuceCategory && secondBody.categoryBitMask == CollisionBitMask.birdCategory {
+            run(coinSound)
+
             capturedLettuce += 1
             lettuceLbl.text = "Lettuce: \(capturedLettuce)"
             print("YOU are HEREEREREREERRE")
@@ -251,11 +255,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if firstBody.categoryBitMask == CollisionBitMask.birdCategory && secondBody.categoryBitMask == CollisionBitMask.cheeseCategory {
+            run(coinSound)
+
             capturedCheese += 1
             cheeseLbl.text = "Cheese: \(capturedCheese)"
             
             secondBody.node?.removeFromParent()
         } else if firstBody.categoryBitMask == CollisionBitMask.cheeseCategory && secondBody.categoryBitMask == CollisionBitMask.birdCategory {
+            run(coinSound)
+
             capturedCheese += 1
             cheeseLbl.text = "Cheese: \(capturedCheese)"
             
@@ -284,6 +292,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print("You won")
 
                 createRestartBtn()
+                createEndlessMode()
                 createYouWinLogo()
                 pauseBtn.removeFromParent()
                 self.removeAllActions()
@@ -303,6 +312,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print("You won")
 
                 createRestartBtn()
+                createEndlessMode()
                 createYouWinLogo()
                 pauseBtn.removeFromParent()
                 self.removeAllActions()
